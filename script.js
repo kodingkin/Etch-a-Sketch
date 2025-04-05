@@ -29,7 +29,6 @@ const createGrids = function(sideLength) {
             grid.style.width = "6%";
             grid.style.paddingTop = "6%";
             grid.style.backgroundColor = "skyblue";
-            grid.style.border = "solid #ccc";
             grid.style.flexShrink = "0";
             grid.addEventListener("mouseover", function (event) {
                 event.target.style.backgroundColor = "orange";
@@ -43,13 +42,31 @@ const createGrids = function(sideLength) {
 }
 createGrids(sideLength);
 
+// create createGrid button
+const createGridButton = document.createElement("button");
+createGridButton.innerText = "Create a new Grid"
+createGridButton.addEventListener("click", function () {
+    const input = prompt("Please input the resolution of the drawing pad");
+    const sideLength = parseInt(input);
+    if (sideLength === null || isNaN(sideLength)) {
+        alert("plese enter a number")
+        return;
+    }
+    const containers = document.querySelectorAll(".container");
+    containers.forEach(container => {
+        gridContainer.removeChild(container); 
+    })
+    createGrids(sideLength);
+})
+document.body.insertBefore(createGridButton, gridContainer)
+
 // create reset button
 const resetButton = document.createElement("button");
 resetButton.innerText = "Reset Button";
 resetButton.addEventListener("click", function () {
     const grids = document.querySelectorAll(".grid");
-    grids.forEach(element => {
-        element.style.backgroundColor = "skyblue";
+    grids.forEach(grid => {
+        grid.style.backgroundColor = "skyblue";
     });
 })
 document.body.insertBefore(resetButton, gridContainer)
