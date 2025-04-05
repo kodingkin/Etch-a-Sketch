@@ -8,7 +8,8 @@ function getRandomColor() {
 }
 
 let sideLength = 16;
-const createGrids = function(sideLength) { 
+let method = 0;
+const createGrids = function(sideLength, method) { 
     // create 16x16 grids
     for (let i = 0; i < sideLength; i++) {
         const container = document.createElement("div");
@@ -43,20 +44,23 @@ const createGrids = function(sideLength) {
             grid.style.flexShrink = "0";
 
             // drawing with monotone
-            // grid.style.opacity = "0";
+            if (method === 2) grid.style.opacity = "0";
+
             grid.addEventListener("mouseover", function (event) {
                 // default setting
-                event.target.style.backgroundColor = "orange";
+                if (method === 0) event.target.style.backgroundColor = "orange";
 
                 // drawing with random color
-                // event.target.style.backgroundColor = getRandomColor();
+                if (method === 1) event.target.style.backgroundColor = getRandomColor();
 
                 // drawing with monotone
-                // let currentOpacity = parseFloat(event.target.style.opacity) || 0; // Start at 0 if unset
-                // if (currentOpacity < 1) { // Stop at 1 (fully opaque)
-                //     currentOpacity += 0.1; // Increase by 10%
-                //     event.target.style.opacity = currentOpacity.toFixed(1); // Set new opacity
-                // }
+                if (method === 2) {
+                    let currentOpacity = parseFloat(event.target.style.opacity) || 0;
+                    if (currentOpacity < 1) {
+                        currentOpacity += 0.1;
+                        event.target.style.opacity = currentOpacity.toFixed(1);
+                    }
+                }
             })
 
             // append the grid into container
@@ -65,7 +69,7 @@ const createGrids = function(sideLength) {
         gridContainer.appendChild(container);
     }
 }
-createGrids(sideLength);
+createGrids(sideLength, method);
 
 // create createGrid button
 const createGridButton = document.createElement("button");
@@ -81,17 +85,58 @@ createGridButton.addEventListener("click", function () {
     containers.forEach(container => {
         gridContainer.removeChild(container); 
     })
-    createGrids(sideLength);
+    createGrids(sideLength, method);
 })
 buttonContainer.appendChild(createGridButton);
 
 // create reset button
 const resetButton = document.createElement("button");
-resetButton.innerText = "Reset Button";
+resetButton.innerText = "Reset";
 resetButton.addEventListener("click", function () {
-    const grids = document.querySelectorAll(".grid");
-    grids.forEach(grid => {
-        grid.style.backgroundColor = "skyblue";
-    });
+    const containers = document.querySelectorAll(".container");
+    containers.forEach(container => {
+        gridContainer.removeChild(container); 
+    })
+    createGrids(sideLength, 1);
+    method = 1;
 })
 buttonContainer.appendChild(resetButton);
+
+// create randomColor button
+const randomColorButton = document.createElement("button");
+randomColorButton.innerText = "Random Color";
+randomColorButton.addEventListener("click", function () {
+    const containers = document.querySelectorAll(".container");
+    containers.forEach(container => {
+        gridContainer.removeChild(container); 
+    })
+    createGrids(sideLength, 1);
+    method = 1;
+})
+buttonContainer.appendChild(randomColorButton);
+
+// create monotone button
+const monotoneButton = document.createElement("button");
+monotoneButton.innerText = "Monotone";
+monotoneButton.addEventListener("click", function () {
+    const containers = document.querySelectorAll(".container");
+    containers.forEach(container => {
+        gridContainer.removeChild(container); 
+    })
+    createGrids(sideLength, 2);
+    method = 2;
+})
+buttonContainer.appendChild(monotoneButton);
+
+// create basic button
+const basicButton = document.createElement("button");
+basicButton.innerText = "Basic Color";
+basicButton.addEventListener("click", function () {
+    const containers = document.querySelectorAll(".container");
+    containers.forEach(container => {
+        gridContainer.removeChild(container); 
+    })
+    createGrids(sideLength, 0);
+    method = 0;
+})
+buttonContainer.appendChild(basicButton);
