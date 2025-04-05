@@ -3,15 +3,23 @@ const gridContainer = document.querySelector("#grid_container");
 const buttonContainer = document.querySelector("#button_container");
 gridContainer.style.width = "100%";
 
+function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+
 let sideLength = 16;
 const createGrids = function(sideLength) { 
     // create 16x16 grids
     for (let i = 0; i < sideLength; i++) {
         const container = document.createElement("div");
+        if (i === 0) container.style.borderTop = "solid #ccc";
+        if (i === (sideLength - 1)) container.style.borderBottom = "solid #ccc";
         container.classList.add("container");
         container.style.display = "flex";
         container.style.width = "70%";
         container.style.flexDirection = "row";
+        container.style.borderLeft = "solid #ccc";
+        container.style.borderRight = "solid #ccc";
 
         for (let g = 0; g < sideLength; g++) {
             // create the grid
@@ -33,8 +41,22 @@ const createGrids = function(sideLength) {
             grid.style.paddingTop = gridWidthString;
             grid.style.backgroundColor = "skyblue";
             grid.style.flexShrink = "0";
+
+            // drawing with monotone
+            // grid.style.opacity = "0";
             grid.addEventListener("mouseover", function (event) {
+                // default setting
                 event.target.style.backgroundColor = "orange";
+
+                // drawing with random color
+                // event.target.style.backgroundColor = getRandomColor();
+
+                // drawing with monotone
+                // let currentOpacity = parseFloat(event.target.style.opacity) || 0; // Start at 0 if unset
+                // if (currentOpacity < 1) { // Stop at 1 (fully opaque)
+                //     currentOpacity += 0.1; // Increase by 10%
+                //     event.target.style.opacity = currentOpacity.toFixed(1); // Set new opacity
+                // }
             })
 
             // append the grid into container
