@@ -1,9 +1,31 @@
+body {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+button {
+    width: 100%;
+    padding: 15%; 
+    margin-bottom: 15%;
+}
+
 #grid_container {
     display: flex;
-    width: 100%;
+    width: 80%;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 3%;
+}
+
+#button_container {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 3%;
+
 }
 
