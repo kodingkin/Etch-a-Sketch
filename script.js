@@ -73,10 +73,10 @@ createGrids(sideLength, method);
 
 // create createGrid button
 const createGridButton = document.createElement("button");
-createGridButton.innerText = "Create a new Grid"
+createGridButton.innerText = "Change Grid resolution"
 createGridButton.addEventListener("click", function () {
     const input = prompt("Please input the resolution of the drawing pad (1-100)");
-    const sideLength = parseInt(input);
+    sideLength = parseInt(input);
     if (sideLength === null || isNaN(sideLength) || sideLength > 100 || sideLength <= 0) {
         alert("plese enter a number between 1-100")
         return;
@@ -97,8 +97,7 @@ resetButton.addEventListener("click", function () {
     containers.forEach(container => {
         gridContainer.removeChild(container); 
     })
-    createGrids(sideLength, 1);
-    method = 1;
+    createGrids(sideLength, method);
 })
 buttonContainer.appendChild(resetButton);
 
